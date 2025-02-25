@@ -53,7 +53,7 @@ You can check out a live demo of the Car Rental App here: [https://car-rental.la
 
 ### 1️⃣ Clone the Repository
 ```sh
-git clone https://github.com/your-username/car-rental-application.git
+git clone https://github.com/mahfoman/car-rental-application.git
 cd car-rental-application
 ```
 

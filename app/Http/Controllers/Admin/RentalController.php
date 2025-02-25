@@ -42,7 +42,7 @@ class RentalController extends Controller
             'user_id' => 'required|exists:users,id',
             'car_id' => 'required|exists:cars,id',
             'start_date' => 'required|date',
-            'end_date' => 'required|date|after:start_date',
+            'end_date' => 'required|date',
         ]);
 
         $car = Car::findOrFail($request->car_id);
