@@ -45,8 +45,8 @@ A modern car rental service built with Laravel, Inertia.js, and Vue 3. Exploring
 ---
 ## 🏗️ Live Demo
 
-- **You can check out a live demo of the Car Rental App here: [https://car-rental.laravelcs.com/](https://car-rental.laravelcs.com/)
-- **Video demo link [https://drive.google.com/file/d/1fA53Aip4qHb5pMAHCaRsNPPZXribqpru/view?usp=drive_link](https://drive.google.com/file/d/1fA53Aip4qHb5pMAHCaRsNPPZXribqpru/view?usp=drive_link)
+- You can check out a live demo of the Car Rental App here: [https://car-rental.laravelcs.com/](https://car-rental.laravelcs.com/)
+- Video demo link [https://drive.google.com/file/d/1fA53Aip4qHb5pMAHCaRsNPPZXribqpru/view?usp=drive_link](https://drive.google.com/file/d/1fA53Aip4qHb5pMAHCaRsNPPZXribqpru/view?usp=drive_link)
 
 ---
 
