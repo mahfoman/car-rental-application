@@ -1,0 +1,4 @@
+#nprogress .bar {
+    background: #4CAF50 !important; /* Green color */
+    height: 4px !important; /* Adjust height */
+}

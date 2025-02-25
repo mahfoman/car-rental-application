@@ -1,0 +1,92 @@
+<template>
+    <div class="bg-cyan-50 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1 md:py-4">
+            <div class="flex items-center justify-between">
+
+                <!-- Menu Trigger -->
+                <button
+                    @click="menuOpen = !menuOpen"
+                    type="button"
+                    class="md:hidden w-10 h-10 rounded-lg flex justify-center items-center focus:outline-none"
+                >
+                    <svg
+                        class="text-gray-500 w-6 h-6 transition-transform duration-300"
+                        :class="{ 'rotate-90': menuOpen }"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <!-- ./ Menu Trigger -->
+
+                <!-- Logo -->
+                <Link :href="`/`" class="font-bold text-gray-700 text-2xl">Car Rental</Link>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-4">
+                    <Link :href="`/`" :class="navClass('/')">Home</Link>
+                    <Link :href="`/cars`" :class="navClass('/cars')">Browse Cars</Link>
+                    <Link href="/about" :class="navClass('/about')">About</Link>
+                    <Link href="/contact" :class="navClass('/contact')">Contact</Link>
+                    <Link
+                        v-if="user.name"
+                        :href="user.role == 'admin' ? `/admin/dashboard` : `/rentals`"
+                        :class="navClass(user.role == 'admin' ? '/admin/dashboard' : '/rentals')"
+                    >
+                        {{ user.name }}
+                    </Link>
+                    <Link v-if="!user.name" :href="`/login`" :class="navClass('/login')">Login</Link>
+                    <Link v-if="user.name" :href="`/logout`" :class="navClass('/logout')">Logout</Link>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div v-if="menuOpen" class="md:hidden mt-2 space-y-2 bg-white p-4 rounded-lg shadow-lg">
+                <Link :href="`/`" :class="navClass('/')">Home</Link>
+                <Link :href="`/cars`" :class="navClass('/cars')">Browse Cars</Link>
+                <Link href="/about" :class="navClass('/about')">About</Link>
+                <Link href="/contact" :class="navClass('/contact')">Contact</Link>
+                <Link
+                    v-if="user.name"
+                    :href="user.role == 'admin' ? `/admin/dashboard` : `/rentals`"
+                    :class="navClass(user.role == 'admin' ? '/admin/dashboard' : '/rentals')"
+                >
+                    {{ user.name }}
+                </Link>
+                <Link v-if="!user.name" :href="`/login`" :class="navClass('/login')">Login</Link>
+                <Link v-if="user.name" :href="`/logout`" :class="navClass('/logout')">Logout</Link>
+            </div>
+        </div>
+    </div>
+
+    <slot />
+
+    <!-- Footer Section -->
+    <footer class="bg-gray-50 shadow-sm py-8 mt-12 text-center text-gray-700">
+        <p>We hope you enjoy your rental experience with us! <br>If you have any feedback or suggestions, feel free to let us<Link class="text-center ms-3 font-bold" :href="`/contact`">know</Link>.</p>
+        <p>If you want to learn more with laravel code snippet, you can visit this site <a class="font-semibold" href="https://laravelcodesnippets.com" target="_blank">https://laravelcodesnippets.com</a> </p>
+    </footer>
+</template>
+
+<script setup>
+import { ref, computed } from 'vue'
+import { Link, usePage, router } from '@inertiajs/vue3'
+
+const page = usePage();
+
+const menuOpen = ref(false);
+
+const user = page.props.user;
+
+const currentUrl = computed(() => page.url)
+
+const navClass = (path) => {
+    return currentUrl.value === path
+        ? 'px-2 py-1 rounded-lg text-gray-600 underline font-bold' // Active link style
+        : 'px-2 py-1 rounded-lg text-black-400 hover:text-gray-600 hover:underline' // Inactive link style
+}
+
+</script>

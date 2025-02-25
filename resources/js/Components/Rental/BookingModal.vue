@@ -1,0 +1,117 @@
+<template>
+    <div class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-20 z-50">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-auto">
+            <h2 class="text-xl font-semibold mb-4">Add Booking with car "{{ car.name }}"</h2>
+
+            <form @submit.prevent="submitForm" class="space-y-4">
+
+                <div class="mb-4">
+                    <label class="block text-gray-700">Start Date</label>
+                    <DatePicker v-model="form.start_date" :min-date="minDate"
+                                auto-apply
+                                :format="dateFormat"
+                                position="left"
+                                class="w-full mt-2 rounded" />
+                    <p v-if="errors.start_date" class="text-red-500 text-sm">{{ errors.start_date }}</p>
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-gray-700">End Date</label>
+                    <DatePicker v-model="form.end_date" :min-date="form.start_date"
+                                auto-apply
+                                :format="dateFormat"
+                                position="left"
+                                class="w-full mt-2 rounded" />
+                    <p v-if="errors.end_date" class="text-red-500 text-sm">{{ errors.end_date }}</p>
+                </div>
+
+                <div class="flex justify-end space-x-4">
+                    <button type="button" @click="close" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700">
+                        Add Booking
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+</template>
+
+<script setup>
+import { ref, computed, defineProps, defineEmits, watch } from 'vue';
+import DatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
+import { usePage, useForm, router } from '@inertiajs/vue3';
+import { createToaster } from "@meforma/vue-toaster";
+
+const dateFormat = 'yyyy-MM-dd';
+
+const props = defineProps({
+    isOpen: Boolean,
+    car: Object,
+});
+
+
+const toaster = createToaster();
+const emit = defineEmits(['close']);
+
+// Close modal properly
+const close = () => {
+    emit('close');
+};
+
+const errors = ref({});
+
+// Booking Form
+const page = usePage();
+const user = computed(() => page.props.user);
+
+const minDate = new Date();
+minDate.setDate(minDate.getDate() + 1);
+
+const form = useForm({
+    start_date: null,
+    end_date: null,
+    car_id: props.car.id
+});
+
+const validateForm = () => {
+    errors.value = {}; // Reset errors
+
+    if (!form.start_date) {
+        errors.value.start_date = "Start date is required.";
+    }
+
+    if (!form.end_date) {
+        errors.value.end_date = "End date is required.";
+    } else if (form.start_date && form.end_date < form.start_date) {
+        errors.value.end_date = "End date must be after start date.";
+    }
+    //console.log(Object.keys(errors.value).length);
+    return Object.keys(errors.value).length === 0;
+}
+
+const submitForm = () => {
+
+    if (!validateForm()) return;
+
+    form.post(`/rentals`, {
+        onError: (errors) => {
+            console.log(errors); // Logging any validation errors
+            toaster.error(errors);
+        },
+        onSuccess: (response) => {
+            console.log(page.props); //return false;
+            if(page.props.flash.status){
+                toaster.success(page.props.flash.message);
+                router.get("/rentals");
+            } else {
+                toaster.error(page.props.flash.message);
+            }
+
+        },
+    });
+};
+</script>
+
