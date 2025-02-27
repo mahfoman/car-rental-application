@@ -90,6 +90,8 @@ npm run dev
 ## 🎯 Future Enhancements
 - 🚀 Payment Integration
 - 📊 Advanced Reporting
+- Mobile responsiveness
+- API urls for mobile apps
 
 ---
 
