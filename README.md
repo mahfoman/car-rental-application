@@ -1,4 +1,4 @@
-# 🚗 Car Rental Applicatio
+# 🚗 Car Rental Application
 
 A modern car rental service built with Laravel, Inertia.js, and Vue 3. Exploring car, making bookings, and managing rentals seamlessly.
 
