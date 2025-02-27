@@ -71,10 +71,12 @@ php artisan key:generate
 ```
 - Configure database credentials in `.env` file
 
-### 4️⃣ Run Migrations & Seed Data
+### 4️⃣ Run Migrations, Import Data & Create symlink for car images
 ```sh
 php artisan migrate
 ```
+- import given car-rental.sql file to your database
+- php artisan storage:link
 
 ### 5️⃣ Start the Development Server
 ```sh
